@@ -16,19 +16,30 @@ class Persona:
         return self.__nombre
     @nombre.setter
     def nombre(self, nombre):
-        self.__nombre = nombre
+        #validamos que el nombre no sea un número
+        if not isinstance(nombre, str):
+            print("El nombre debe ser una cadena de caracteres")
+        else:
+            self.__nombre = nombre
     @property
     def edad(self):
+    #validamos que la edad sea un número entero
         return self.__edad
     @edad.setter
     def edad(self, edad):
-        self.__edad = edad
+        if not isinstance(edad, int):
+            print("La edad debe ser un número entero")
+        else:
+            self.__edad = edad
     @property
     def dni(self):
         return self.__dni
     @dni.setter
     def dni(self, dni):
-        self.__dni = dni
+        if not isinstance(dni, int):
+            print("El DNI debe ser un número entero")
+        else:
+            self.__dni = dni
     #mostrar
     def mostrar(self):
         print("Nombre: ", self.nombre)
@@ -36,14 +47,16 @@ class Persona:
         print("DNI: ", self.dni)
     #es mayor de edad
     def es_mayor_de_edad(self):
-        if self.edad >= 18:
+        if self.edad == 0:
+            return "No se ha ingresado la edad"
+        elif self.edad >= 18:
             return f"{self.nombre} Es mayor de edad"
         else:
             return f"{self.nombre} No es mayor de edad"
 
 persona = Persona()
-persona.nombre = "Jhonathan"
-persona.edad = 31
-persona.dni = 12345678
+persona.nombre = 123
+persona.edad = "a"
+persona.dni = "12345678"
 persona.mostrar()
 print(persona.es_mayor_de_edad())
