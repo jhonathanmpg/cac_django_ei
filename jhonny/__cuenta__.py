@@ -19,7 +19,11 @@ class Cuenta:
 
     @titular.setter
     def titular(self, titular):
-        self._titular = titular
+        # validamos que el titular no sea un número
+        if not isinstance(titular, str):
+            print("El titular debe ser una cadena de caracteres")
+        else:
+            self._titular = titular
 
     # getters y setters para el atributo cantidad
     @property
@@ -34,12 +38,21 @@ class Cuenta:
 
     # ingresar dinero a la cuenta
     def ingresar(self, cantidad):
-        if cantidad > 0:
-            self._cantidad += cantidad
+        #validamos que la cantidad sea un número
+        if not isinstance(cantidad, (int, float)):
+            print("La cantidad a ingresar debe ser un número")
+        else:
+            if cantidad > 0:
+                self._cantidad += cantidad
 
     # retirar dinero de la cuenta
     def retirar(self, cantidad):
-        self._cantidad -= cantidad
+        #validamos que la cantidad sea un número
+        if not isinstance(cantidad, (int, float)):
+            print("La cantidad a retirar debe ser un número")
+        else:
+            if cantidad > 0:
+                self._cantidad -= cantidad
 
 
     # mostrar información de la cuenta
@@ -47,8 +60,16 @@ class Cuenta:
         print("Titular: ", self.titular)
         print("Cantidad: ", self.cantidad)
 
-cuenta = Cuenta("Juan")
-cuenta.cantidad = 1000 #probamos el setter de cantidad
-cuenta.ingresar(100)
-cuenta.retirar(150)
-cuenta.mostrar()
+#test de validadores
+cuenta1 = Cuenta("Juan")
+cuenta1.cantidad = "asdasd"#probamos el setter de cantidad
+cuenta1.ingresar("asdasd")
+cuenta1.retirar("asjkdhklasd")
+cuenta1.mostrar()
+
+#test de métodos
+cuenta2 = Cuenta("Pedro")
+cuenta2.cantidad = 0
+cuenta2.ingresar(1000)
+cuenta2.retirar(500)
+cuenta2.mostrar()
