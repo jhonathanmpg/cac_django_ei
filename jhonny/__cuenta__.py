@@ -29,6 +29,7 @@ class Cuenta:
     @cantidad.setter
     def cantidad(self, cantidad):
         # el atributo cantidad solo puede ser modificado a través de los métodos ingresar y retirar
+        print("El atributo cantidad no puede ser modificado directamente.")
         pass
 
     # ingresar dinero a la cuenta
@@ -47,6 +48,7 @@ class Cuenta:
         print("Cantidad: ", self.cantidad)
 
 cuenta = Cuenta("Juan")
+cuenta.cantidad = 1000 #probamos el setter de cantidad
 cuenta.ingresar(100)
 cuenta.retirar(150)
 cuenta.mostrar()
