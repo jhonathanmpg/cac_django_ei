@@ -18,7 +18,7 @@ def tupla_itera(diccionario):
             palabra = i
     #retornamos la palabra mas repetida y su frecuencia
     return palabra, maximo
-print(tupla_itera(frecuencia_itera("Hola mundo")))
+print(tupla_itera(frecuencia_itera("Hola mundo Hola mundo Hola mundo Hola mundo hola mundo hola hola")))
 
 #solución con lambda function recursiva
 tupla_recursiva = lambda diccionario: (max(diccionario, key=diccionario.get), diccionario[max(diccionario, key=diccionario.get)])
