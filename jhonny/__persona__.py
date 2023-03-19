@@ -6,73 +6,100 @@
 
 class Persona:
     #constructor
-    def __init__(self, nombre = "", edad = 0, dni = 0): #constructor donde los datos pueden estar vacíos
+    def __init__(self, nombre=None, edad=None, dni=None): #constructor donde los datos pueden estar vacíos
         self.nombre = nombre
         self.edad = edad
         self.dni = dni
+
     #setters y getters
     @property
     def nombre(self):
         return self.__nombre
+
     @nombre.setter
+
     def nombre(self, nombre):
         #validamos que el nombre no sea un número
         if not isinstance(nombre, str):
-            print("El nombre debe ser una cadena de caracteres")
+            self.__nombre = None
         else:
             self.__nombre = nombre
+
     @property
     def edad(self):
         return self.__edad
+
     @edad.setter
     def edad(self, edad):
+        #validamos que la edad sea un número entero
         if not isinstance(edad, int):
-            print("La edad debe ser un número entero")
+            self.__edad = None
         else:
             self.__edad = edad
+
     @property
     def dni(self):
         return self.__dni
+
     @dni.setter
     def dni(self, dni):
+        #validamos que el dni sea un número entero
         if not isinstance(dni, int):
-            print("El DNI debe ser un número entero")
+            self.__dni = None
         else:
             self.__dni = dni
+
     #mostrar
     def mostrar(self):
-        print("Nombre: ", self.nombre)
-        print("Edad: ", self.edad)
-        print("DNI: ", self.dni)
+        return f"Nombre: {self.nombre}\nEdad: {self.edad}\nDNI: {self.dni}"
+
     #es mayor de edad
     def es_mayor_de_edad(self):
-        if self.edad == 0:
+        #validar que se haya ingresado la edad
+        if self.edad == None:
             return "No se ha ingresado la edad"
-        elif self.edad >= 18:
-            return f"{self.nombre} Es mayor de edad"
+        #validar si es mayor de edad
+        if self.edad >= 18:
+            return f"{self.nombre} es mayor de edad"
         else:
-            return f"{self.nombre} No es mayor de edad"
+            return f"{self.nombre} no es mayor de edad"
 
-print("---------TEST 1------------")
+import unittest
 
-#test de constructor
-persona = Persona("Jhonny", 20, 12345678)
-persona.mostrar()
+class TestPersona(unittest.TestCase):
+    def test_nombre(self):
+        persona = Persona()
+        persona.nombre = 123
+        self.assertEqual(persona.nombre, None)
+        persona.nombre = "Juan"
+        self.assertEqual(persona.nombre, "Juan")
 
-#test de validadores
-print("---------TEST 2------------")
-persona = Persona()
-persona.nombre = 123
-persona.edad = "a"
-persona.dni = "12345678"
-persona.mostrar()
-print(persona.es_mayor_de_edad())
+    def test_edad(self):
+        persona = Persona()
+        persona.edad = "veinte"
+        self.assertEqual(persona.edad, None)
+        persona.edad = 20
+        self.assertEqual(persona.edad, 20)
+
+    def test_dni(self):
+        persona = Persona()
+        persona.dni = "1234"
+        self.assertEqual(persona.dni, None)
+        persona.dni = 12345678
+        self.assertEqual(persona.dni, 12345678)
+
+    def test_mostrar(self):
+        persona = Persona("Juan", 20, 12345678)
+        self.assertEqual(persona.mostrar(), "Nombre: Juan\nEdad: 20\nDNI: 12345678")
+
+    def test_es_mayor_de_edad(self):
+        persona = Persona(nombre="Juan", dni=12345678)
+        self.assertEqual(persona.es_mayor_de_edad(), "No se ha ingresado la edad")
+        persona.edad = 17
+        self.assertEqual(persona.es_mayor_de_edad(), "Juan no es mayor de edad")
+        persona.edad = 18
+        self.assertEqual(persona.es_mayor_de_edad(), "Juan es mayor de edad")
 
 
-print("--------TEST 3-------------")
-
-#test de setters y getters
-persona.nombre = "Pedro"
-persona.edad = 34
-persona.dni = 87654321
-persona.mostrar()
+if __name__ == '__main__':
+    unittest.main()
