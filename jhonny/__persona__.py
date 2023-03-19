@@ -17,30 +17,18 @@ class Persona:
     @nombre.setter
     def nombre(self, nombre):
         self.__nombre = nombre
-    @nombre.setter
-    def nombre(self, nombre):
-        self.__nombre = nombre
-    @nombre.getter
-    def nombre(self):
-        return self.__nombre
     @property
     def edad(self):
         return self.__edad
     @edad.setter
     def edad(self, edad):
         self.__edad = edad
-    @edad.getter
-    def edad(self):
-        return self.__edad
     @property
     def dni(self):
         return self.__dni
     @dni.setter
     def dni(self, dni):
         self.__dni = dni
-    @dni.getter
-    def dni(self):
-        return self.__dni
     #mostrar
     def mostrar(self):
         print("Nombre: ", self.nombre)
