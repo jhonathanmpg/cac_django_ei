@@ -60,16 +60,23 @@ class Cuenta:
         print("Titular: ", self.titular)
         print("Cantidad: ", self.cantidad)
 
+
+
+
 #test de validadores
+print("---------TEST 1------------")
 cuenta1 = Cuenta("Juan")
 cuenta1.cantidad = "asdasd"#probamos el setter de cantidad
 cuenta1.ingresar("asdasd")
 cuenta1.retirar("asjkdhklasd")
 cuenta1.mostrar()
 
+
 #test de métodos
+print("---------TEST 2------------")
 cuenta2 = Cuenta("Pedro")
 cuenta2.cantidad = 0
 cuenta2.ingresar(1000)
 cuenta2.retirar(500)
 cuenta2.mostrar()
+

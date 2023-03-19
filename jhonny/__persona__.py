@@ -23,7 +23,6 @@ class Persona:
             self.__nombre = nombre
     @property
     def edad(self):
-    #validamos que la edad sea un número entero
         return self.__edad
     @edad.setter
     def edad(self, edad):
@@ -54,9 +53,26 @@ class Persona:
         else:
             return f"{self.nombre} No es mayor de edad"
 
+print("---------TEST 1------------")
+
+#test de constructor
+persona = Persona("Jhonny", 20, 12345678)
+persona.mostrar()
+
+#test de validadores
+print("---------TEST 2------------")
 persona = Persona()
 persona.nombre = 123
 persona.edad = "a"
 persona.dni = "12345678"
 persona.mostrar()
 print(persona.es_mayor_de_edad())
+
+
+print("--------TEST 3-------------")
+
+#test de setters y getters
+persona.nombre = "Pedro"
+persona.edad = 34
+persona.dni = 87654321
+persona.mostrar()
