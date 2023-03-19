@@ -29,54 +29,103 @@ class Cuenta:
     @property
     def cantidad(self):
         return self._cantidad
-
-    @cantidad.setter
-    def cantidad(self, cantidad):
-        # el atributo cantidad solo puede ser modificado a través de los métodos ingresar y retirar
-        print("El atributo cantidad no puede ser modificado directamente.")
-        pass
-
     # ingresar dinero a la cuenta
-    def ingresar(self, cantidad):
+    def ingresar(self, cantidad, nombre =  None):
         #validamos que la cantidad sea un número
         if not isinstance(cantidad, (int, float)):
             print("La cantidad a ingresar debe ser un número")
         else:
             if cantidad > 0:
                 self._cantidad += cantidad
+            else:
+                print("La cantidad a ingresar debe ser mayor a cero")
+        if nombre == None:
+            pass
+        else:
+            if nombre != self.titular:
+                print(f"El nombre del titular fue modificado de {self.titular} a {nombre}")
+                self.titular = nombre
 
     # retirar dinero de la cuenta
-    def retirar(self, cantidad):
-        #validamos que la cantidad sea un número
+    # retirar dinero de la cuenta
+    def retirar(self, cantidad, nombre=None):
+    # validamos que la cantidad sea un número
         if not isinstance(cantidad, (int, float)):
             print("La cantidad a retirar debe ser un número")
         else:
             if cantidad > 0:
                 self._cantidad -= cantidad
-
+            else:
+                print("La cantidad a retirar debe ser mayor a cero")
+        if nombre == None:
+            pass
+        else:
+            if nombre != self.titular:
+                print(f"El nombre del titular fue modificado de {self.titular} a {nombre}")
+                self.titular = nombre
 
     # mostrar información de la cuenta
     def mostrar(self):
-        print("Titular: ", self.titular)
-        print("Cantidad: ", self.cantidad)
+        return "Titular: {}\nCantidad: {}".format(self.titular, self.cantidad)
 
 
+import unittest
 
+class TestCuenta(unittest.TestCase):
 
-#test de validadores
-print("---------TEST 1------------")
-cuenta1 = Cuenta("Juan")
-cuenta1.cantidad = "asdasd"#probamos el setter de cantidad
-cuenta1.ingresar("asdasd")
-cuenta1.retirar("asjkdhklasd")
-cuenta1.mostrar()
+    def setUp(self):
+        self.cuenta = Cuenta("Juan")
 
+    def test_titular(self):
+        self.assertEqual(self.cuenta.titular, "Juan")
 
-#test de métodos
-print("---------TEST 2------------")
-cuenta2 = Cuenta("Pedro")
-cuenta2.cantidad = 0
-cuenta2.ingresar(1000)
-cuenta2.retirar(500)
-cuenta2.mostrar()
+        # probamos cambiar el titular
+        self.cuenta.titular = "Pedro"
+        self.assertEqual(self.cuenta.titular, "Pedro")
+
+        # probamos asignar un número como titular
+        self.cuenta.titular = 123
+        self.assertEqual(self.cuenta.titular, "Pedro")
+
+    def test_ingresar(self):
+        # probamos ingresar una cantidad válida
+        self.cuenta.ingresar(100)
+        self.assertEqual(self.cuenta.cantidad, 100)
+
+        # probamos ingresar una cantidad inválida (no numérica)
+        self.cuenta.ingresar("cien")
+        self.assertEqual(self.cuenta.cantidad, 100)
+
+        # probamos ingresar una cantidad inválida (menor o igual a cero)
+        self.cuenta.ingresar(-50)
+        self.assertEqual(self.cuenta.cantidad, 100)
+
+        # probamos ingresar una cantidad válida con un nombre de titular diferente
+        self.cuenta.ingresar(50, "Juan")
+        self.assertEqual(self.cuenta.cantidad, 150)
+        print (self.cuenta.cantidad, self.cuenta.titular)
+
+    def test_retirar(self):
+        # probamos retirar una cantidad válida
+        self.cuenta.retirar(50)
+        self.assertEqual(self.cuenta.cantidad, -50)
+
+        # probamos retirar una cantidad inválida (no numérica)
+        self.cuenta.retirar("cincuenta")
+        self.assertEqual(self.cuenta.cantidad, -50)
+
+        # probamos retirar una cantidad inválida (menor o igual a cero)
+        self.cuenta.retirar(-10)
+        self.assertEqual(self.cuenta.cantidad, -50)
+
+        # probamos retirar una cantidad mayor a la disponible en la cuenta
+        self.cuenta.retirar(100)
+        self.assertEqual(self.cuenta.cantidad, -150)
+
+    def test_mostrar(self):
+        # probamos el método mostrar()
+        self.assertEqual(self.cuenta.mostrar(), "Titular: Juan\nCantidad: 0.0")
+
+if __name__ == '__main__':
+    unittest.main()
 
