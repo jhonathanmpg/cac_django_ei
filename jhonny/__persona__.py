@@ -49,9 +49,9 @@ class Persona:
     #es mayor de edad
     def es_mayor_de_edad(self):
         if self.edad >= 18:
-            return True
+            return f"{self.nombre} Es mayor de edad"
         else:
-            return False
+            return f"{self.nombre} No es mayor de edad"
 
 persona = Persona()
 persona.nombre = "Jhonathan"
