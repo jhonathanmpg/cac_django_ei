@@ -6,23 +6,41 @@
 
 class Persona:
     #constructor
-    def __init__(self, nombre = "", edad = 0, dni = 0):
+    def __init__(self, nombre = "", edad = 0, dni = 0): #constructor donde los datos pueden estar vacíos
         self.nombre = nombre
         self.edad = edad
         self.dni = dni
     #setters y getters
-    def set_nombre(self, nombre):
-        self.nombre = nombre
-    def get_nombre(self):
-        return self.nombre
-    def set_edad(self, edad):
-        self.edad = edad
-    def get_edad(self):
-        return self.edad
-    def set_dni(self, dni):
-        self.dni = dni
-    def get_dni(self):
-        return self.dni
+    @property
+    def nombre(self):
+        return self.__nombre
+    @nombre.setter
+    def nombre(self, nombre):
+        self.__nombre = nombre
+    @nombre.setter
+    def nombre(self, nombre):
+        self.__nombre = nombre
+    @nombre.getter
+    def nombre(self):
+        return self.__nombre
+    @property
+    def edad(self):
+        return self.__edad
+    @edad.setter
+    def edad(self, edad):
+        self.__edad = edad
+    @edad.getter
+    def edad(self):
+        return self.__edad
+    @property
+    def dni(self):
+        return self.__dni
+    @dni.setter
+    def dni(self, dni):
+        self.__dni = dni
+    @dni.getter
+    def dni(self):
+        return self.__dni
     #mostrar
     def mostrar(self):
         print("Nombre: ", self.nombre)
@@ -36,8 +54,8 @@ class Persona:
             return False
 
 persona = Persona()
-persona.set_nombre("Jhonathan")
-persona.set_edad(31)
-persona.set_dni(12345678)
+persona.nombre = "Jhonathan"
+persona.edad = 31
+persona.dni = 12345678
 persona.mostrar()
 print(persona.es_mayor_de_edad())
