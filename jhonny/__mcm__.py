@@ -2,6 +2,7 @@
 #sabemos que el minimo comun multiplo son los numeros que son multiplos de ambos, se repitan o no
 #también se puede definir como el número más pequeño que es múltiplo de ambos números.
 #solución con función iterativa
+from __mcd__ import mcd_recursiva
 def mcm_itera(a,b):
     #inicializamos la variable mcm = 1, ya que uno divide a cualquier numero
     mcm = 1
