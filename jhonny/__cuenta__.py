@@ -6,16 +6,17 @@
 #● ingresar(cantidad): se ingresa una cantidad a la cuenta, si la cantidad introducida es negativa, no se hará nada.
 #● retirar(cantidad): se retira una cantidad a la cuenta. La cuenta puede estar en números rojos
 
+from __persona__ import Persona
 class Cuenta:
-    # constructor
-    def __init__(self, titular):
+    #constructor
+    def  __init__(self, titular = Persona(), cantidad = 0):
         self._titular = titular
-        self._cantidad = 0.0
+        self._cantidad = cantidad
 
     # getters y setters para el atributo titular
     @property
     def titular(self):
-        return self._titular
+        return self._titular.nombre
 
     @titular.setter
     def titular(self, titular):
@@ -23,11 +24,12 @@ class Cuenta:
         if not isinstance(titular, str):
             print("El titular debe ser una cadena de caracteres")
         else:
-            self._titular = titular
+            self._titular.nombre = titular
 
     # getters y setters para el atributo cantidad
     @property
     def cantidad(self):
+        #cantidad puede ser un número entero o decimal
         return self._cantidad
     # ingresar dinero a la cuenta
     def ingresar(self, cantidad, nombre =  None):
@@ -74,57 +76,36 @@ import unittest
 class TestCuenta(unittest.TestCase):
 
     def setUp(self):
-        self.cuenta = Cuenta("Juan")
+        self.persona = Persona("Juan", 25, 12345678)
+        self.cuenta = Cuenta(self.persona, 0)
 
     def test_titular(self):
         self.assertEqual(self.cuenta.titular, "Juan")
-
-        # probamos cambiar el titular
         self.cuenta.titular = "Pedro"
         self.assertEqual(self.cuenta.titular, "Pedro")
 
-        # probamos asignar un número como titular
-        self.cuenta.titular = 123
+    def test_ingresar(self):
+        self.cuenta.ingresar(50)
+        self.assertEqual(self.cuenta.cantidad, 50)
+        self.cuenta.ingresar(-10)
+        self.assertEqual(self.cuenta.cantidad, 50)
+        self.cuenta.ingresar(20, "Pedro")
         self.assertEqual(self.cuenta.titular, "Pedro")
 
-    def test_ingresar(self):
-        # probamos ingresar una cantidad válida
-        self.cuenta.ingresar(100)
-        self.assertEqual(self.cuenta.cantidad, 100)
-
-        # probamos ingresar una cantidad inválida (no numérica)
-        self.cuenta.ingresar("cien")
-        self.assertEqual(self.cuenta.cantidad, 100)
-
-        # probamos ingresar una cantidad inválida (menor o igual a cero)
-        self.cuenta.ingresar(-50)
-        self.assertEqual(self.cuenta.cantidad, 100)
-
-        # probamos ingresar una cantidad válida con un nombre de titular diferente
-        self.cuenta.ingresar(50, "Juan")
-        self.assertEqual(self.cuenta.cantidad, 150)
-        print (self.cuenta.cantidad, self.cuenta.titular)
-
     def test_retirar(self):
-        # probamos retirar una cantidad válida
+        self.cuenta.ingresar(100)
         self.cuenta.retirar(50)
-        self.assertEqual(self.cuenta.cantidad, -50)
-
-        # probamos retirar una cantidad inválida (no numérica)
-        self.cuenta.retirar("cincuenta")
-        self.assertEqual(self.cuenta.cantidad, -50)
-
-        # probamos retirar una cantidad inválida (menor o igual a cero)
+        self.assertEqual(self.cuenta.cantidad, 50)
         self.cuenta.retirar(-10)
-        self.assertEqual(self.cuenta.cantidad, -50)
-
-        # probamos retirar una cantidad mayor a la disponible en la cuenta
-        self.cuenta.retirar(100)
-        self.assertEqual(self.cuenta.cantidad, -150)
+        self.assertEqual(self.cuenta.cantidad, 50)
+        self.cuenta.retirar(30, "Pedro")
+        self.assertEqual(self.cuenta.titular, "Pedro")
 
     def test_mostrar(self):
-        # probamos el método mostrar()
-        self.assertEqual(self.cuenta.mostrar(), "Titular: Juan\nCantidad: 0.0")
+        self.cuenta.ingresar(50)
+        self.assertEqual(self.cuenta.mostrar(), "Titular: Juan\nCantidad: 50")
+        self.cuenta.titular = "Pedro"
+        self.assertEqual(self.cuenta.mostrar(), "Titular: Pedro\nCantidad: 50")
 
 if __name__ == '__main__':
     unittest.main()

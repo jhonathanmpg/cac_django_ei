@@ -35,7 +35,7 @@ class Persona:
         if not isinstance(edad, int):
             self.__edad = None
         else:
-            self.__edad = edad
+            self.__edad = int(edad)
 
     @property
     def dni(self):
@@ -60,9 +60,9 @@ class Persona:
             return "No se ha ingresado la edad"
         #validar si es mayor de edad
         if self.edad >= 18:
-            return f"{self.nombre} es mayor de edad"
+            return True
         else:
-            return f"{self.nombre} no es mayor de edad"
+            return False
 
 import unittest
 
@@ -96,9 +96,9 @@ class TestPersona(unittest.TestCase):
         persona = Persona(nombre="Juan", dni=12345678)
         self.assertEqual(persona.es_mayor_de_edad(), "No se ha ingresado la edad")
         persona.edad = 17
-        self.assertEqual(persona.es_mayor_de_edad(), "Juan no es mayor de edad")
+        self.assertEqual(persona.es_mayor_de_edad(), False)
         persona.edad = 18
-        self.assertEqual(persona.es_mayor_de_edad(), "Juan es mayor de edad")
+        self.assertEqual(persona.es_mayor_de_edad(), True)
 
 
 if __name__ == '__main__':
